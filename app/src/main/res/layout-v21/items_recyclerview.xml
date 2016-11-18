@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="@dimen/cardview_default_radius"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            >
+        <ImageView
+            android:id="@+id/foto"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            tools:ignore="ContentDescription"
+           />
+
+        <TextView
+
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="100"
+    android:layout_margin="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:id="@+id/lugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Lugar"
+
+        android:layout_weight="33"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        tools:targetApi="lollipop"/>
+
+<!--    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:src="@android:drawable/sym_contact_card" />-->
+
+    <TextView
+        android:id="@+id/mes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mes"
+
+
+        android:layout_weight="33"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        tools:targetApi="lollipop"/>
+
+    <TextView
+        android:id="@+id/anio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:text="Año"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:layout_weight="33"
+         />
+
+</LinearLayout>
+
+    <Button
+        android:id="@+id/verImagen"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:text="VER IMAGEN"
+        android:background="@drawable/redondea_boton"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        />
+
+
+
+</LinearLayout>
