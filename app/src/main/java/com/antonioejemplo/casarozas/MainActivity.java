@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Adaptador adapter;
     //Variable que le pasamos a la llamada del adaptador. Necesita un listener
     private Adaptador.OnItemClickListener listener;
+    private static long back_pressed;//Contador para cerrar la app al pulsar dos veces seguidas el btón de cerrar. Se gestiona en el evento onBackPressed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if(v.getId()==R.id.verImagen) {
 
-                                        Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
+                                       // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
 
                                         abrirActivityFoto(idPromocion);
 
@@ -228,6 +229,21 @@ private void abrirActivityFoto(int idPromocion) {
     startActivity(intent);
 
 }
+
+
+    @Override
+    public void onBackPressed() {
+/**
+ * Cierra la app cuando se ha pulsado dos veces seguidas en un intervalo inferior a dos segundos.
+ */
+
+        if (back_pressed + 2000 > System.currentTimeMillis())
+            super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), R.string.salir, Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
+        // super.onBackPressed();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

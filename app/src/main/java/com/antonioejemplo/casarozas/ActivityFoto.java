@@ -1,7 +1,7 @@
 package com.antonioejemplo.casarozas;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,13 +13,15 @@ public class ActivityFoto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foto);
+
+
         fotogrande=(ImageView)findViewById(R.id.fotogrande);
 
         Bundle bundle = getIntent().getExtras();
         //Se recoge un entero y al Editext hay que pasarle un string en el método setText. Es necesario el String.valueof para que no dé error.
         String idrecogido = String.valueOf(bundle.getInt("Id"));
         String imagen=bundle.getString("Imagen");
-        //Informamos la imagen con Glide:
+        //Descargamos la imagen con Glide:
         Glide.with(this)
                 .load("http://petty.hol.es/CasaRozas/"+imagen)//Desde dónde cargamos las imágenes
                 //.placeholder(R.drawable.image_susti)//Imagen de sustitución mientras carga la imagen final. Contiene transición fade.
