@@ -1,9 +1,12 @@
 package com.antonioejemplo.casarozas;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -19,7 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import adaptadores.AdaptadorGridView;
+import adaptadores.AdaptadorGrid;
 import modelos.CasaRozas;
 import volley.AppController;
 import volley.MyJSonRequestImmediate;
@@ -40,7 +43,19 @@ public class ActivityGridView extends AppCompatActivity {
 
          gridView=(GridView)findViewById(R.id.gridView);
         traerDatos();
-        //gridView.setAdapter(new AdaptadorGridView());
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ActivityGridView.this,ActivityFoto.class);
+                intent.putExtra("Id",position);
+                Toast.makeText(ActivityGridView.this, "Has seleccionado el elemento "+position, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     private void traerDatos() {
@@ -122,7 +137,8 @@ public class ActivityGridView extends AppCompatActivity {
 
                             }
 
-                            gridView.setAdapter(new AdaptadorGridView(getBaseContext(),listdatos));
+                            //gridView.setAdapter(new AdaptadorGridView(getBaseContext(),listdatos));
+                            gridView.setAdapter(new AdaptadorGrid(getBaseContext(),listdatos));
 
 
 

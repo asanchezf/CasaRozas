@@ -259,7 +259,7 @@ private void abrirActivityFoto(int idPromocion) {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.grilla) {
             Intent intent=new Intent(MainActivity.this,ActivityGridView.class);
             startActivity(intent);
 
