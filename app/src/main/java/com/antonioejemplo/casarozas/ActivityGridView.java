@@ -1,21 +1,13 @@
 package com.antonioejemplo.casarozas;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -25,49 +17,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import adaptadores.Adaptador;
+import adaptadores.AdaptadorGridView;
 import modelos.CasaRozas;
 import volley.AppController;
 import volley.MyJSonRequestImmediate;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityGridView extends AppCompatActivity {
 
-    private static final String LOGTAG = "OBTENER_DATOS";
-    private RecyclerView lista;
-    private RecyclerView.LayoutManager lManager;
-    private Context contexto;
-    private RequestQueue requestQueue;
-    private List<CasaRozas> listdatos;//Se le enviará al Adaptador
+    private static final String LOGTAG ="OBTENER_DATOS" ;
+    private List<CasaRozas> listdatos;
     private CasaRozas casaRozas;
     private JsonObjectRequest myjsonObjectRequest;
-    private Adaptador adapter;
-    //Variable que le pasamos a la llamada del adaptador. Necesita un listener
-    private Adaptador.OnItemClickListener listener;
-    private static long back_pressed;//Contador para cerrar la app al pulsar dos veces seguidas el btón de cerrar. Se gestiona en el evento onBackPressed
+    private  GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_grid_view);
 
 
-        //Definimos el RecyclerView..Pasar a un procedimiento.
-        lista = (RecyclerView) findViewById(R.id.lista);
-        lManager = new LinearLayoutManager(contexto);
-        //lista.setLayoutManager(lManager);
-        lista.setLayoutManager(
-                new LinearLayoutManager(contexto, LinearLayoutManager.VERTICAL, false));
-
-        //requestQueue = Volley.newRequestQueue(this);
-
+         gridView=(GridView)findViewById(R.id.gridView);
         traerDatos();
-
-
+        //gridView.setAdapter(new AdaptadorGridView());
     }
 
     private void traerDatos() {
@@ -92,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         listdatos = new ArrayList<CasaRozas>();
 
-        Log.v(LOGTAG, "Ha llegado a immediateRequestTiempoActual. Uri: " + uri);
+        //Log.v(LOGTAG, "Ha llegado a immediateRequestTiempoActual. Uri: " + uri);
 
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Accediendo a los datos espera por favor...");
@@ -145,30 +118,13 @@ public class MainActivity extends AppCompatActivity {
 
                                 //LLENAMOS EL ARRAYLIST PARA LUEGO PASÁRSELO AL ADAPTADOR
                                 listdatos.add(casaRozas);
-                                Log.d(LOGTAG, "Tamaño listadatos: " + listdatos.size());
+                               // Log.d(LOGTAG, "Tamaño listadatos: " + listdatos.size());
 
                             }
 
+                            gridView.setAdapter(new AdaptadorGridView(getBaseContext(),listdatos));
 
 
-                            adapter=new Adaptador(listdatos, new Adaptador.OnItemClickListener() {
-                                @Override
-                                public void onClick(RecyclerView.ViewHolder holder, int idPromocion, View v) {
-
-                                    if(v.getId()==R.id.verImagen) {
-
-                                       // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
-
-                                        abrirActivityFoto(idPromocion);
-
-                                    }
-                                }
-                            }, getBaseContext());
-
-
-                            lista.setAdapter(adapter);
-                            /*adapter=new Adaptador(listdatos,listener,getContext());
-                            lista.setAdapter(adapter);*/
 
 
                         } catch (JSONException e) {
@@ -199,73 +155,5 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(myjsonObjectRequest, tag_json_obj_actual);
 
 
-    }
-
-
-private void abrirActivityFoto(int idPromocion) {
-
-    String imagen = null;
-
-    Iterator<CasaRozas> it = listdatos.iterator();
-
-    while (it.hasNext()) {
-
-        casaRozas = (CasaRozas) it.next();
-
-        //idPromocion contiene el id de bbdd del usuario. Lo comparamos con el id que tiene la coleccion para recoger
-        //todos los datos del registro seleccionado
-        if (casaRozas.getId() == (idPromocion)) {
-
-            imagen = casaRozas.getImagen();
-            // Toast.makeText(getActivity(),"Datos recogidos.",Toast.LENGTH_LONG).show();
-            break;
-        }
-    }
-
-    Intent intent = new Intent(MainActivity.this, ActivityFoto.class);
-    intent.putExtra("Id", idPromocion);
-    intent.putExtra("Imagen", imagen);
-
-    startActivity(intent);
-
-}
-
-
-    @Override
-    public void onBackPressed() {
-/**
- * Cierra la app cuando se ha pulsado dos veces seguidas en un intervalo inferior a dos segundos.
- */
-
-        if (back_pressed + 2000 > System.currentTimeMillis())
-            super.onBackPressed();
-        else
-            Toast.makeText(getBaseContext(), R.string.salir, Toast.LENGTH_SHORT).show();
-        back_pressed = System.currentTimeMillis();
-        // super.onBackPressed();
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent=new Intent(MainActivity.this,ActivityGridView.class);
-            startActivity(intent);
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
