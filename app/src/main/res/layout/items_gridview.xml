@@ -19,7 +19,7 @@
         android:layout_gravity="bottom"
         android:background="@color/background_footer"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="6dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@android:color/white" />
 

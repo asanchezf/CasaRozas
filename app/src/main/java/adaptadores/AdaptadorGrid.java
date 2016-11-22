@@ -51,16 +51,27 @@ public class AdaptadorGrid extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        PatronViewHolder patronViewHolder;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) contexto
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.items_gridview, parent, false);
+            //Utilizamos patrón ViewHolder
+            patronViewHolder=new PatronViewHolder();
+            patronViewHolder.texto=(TextView)convertView.findViewById(R.id.textofoto);
+            patronViewHolder.imagen=(ImageView)convertView.findViewById(R.id.imagengrid);
+            convertView.setTag(patronViewHolder);
+        }
+        else{
+
+            patronViewHolder= (PatronViewHolder) convertView.getTag();
         }
 
 
-        ImageView imagen=(ImageView)convertView.findViewById(R.id.imagengrid);
-        TextView texto=(TextView)convertView.findViewById(R.id.textofoto);
+        //HAY PATRÓN VIEWHOLDER Y YA NO HACE FALTA VOLVER A CREAR LA REFERENCIA A LOS OBJETOS EN ESTE MOMENTO
+        /*ImageView imagen=(ImageView)convertView.findViewById(R.id.imagengrid);
+        TextView texto=(TextView)convertView.findViewById(R.id.textofoto);*/
 
         //Informamos la imagen con Glide:
         Glide.with(contexto)
@@ -71,11 +82,22 @@ public class AdaptadorGrid extends BaseAdapter {
                 .centerCrop()//Escalado de imagen para llenar siempre los límites establecidos en diseño
                 //.skipMemoryCache(true)//Omitiría la memoria caché. Por defecto está activada.
                 //.diskCacheStrategy(DiskCacheStrategy.ALL)//Gestión de la caché de disco.
-                .into(imagen);//dónde vamos a mostrar las imágenes
+                .into(patronViewHolder.imagen);//dónde vamos a mostrar las imágenes
 
-        texto.setText(items.get(position).getMes()+" "+ items.get(position).getAnio());
+        patronViewHolder.texto.setText(items.get(position).getMes()+" "+ items.get(position).getAnio());
 
 
         return convertView;
     }
+
+    //Patrón ViewHolder
+    public class PatronViewHolder{
+        ImageView imagen;
+        TextView texto;
+
+
+    }
+
+
+
 }

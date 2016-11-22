@@ -261,6 +261,7 @@ private void abrirActivityFoto(int idPromocion) {
         //noinspection SimplifiableIfStatement
         if (id == R.id.grilla) {
             Intent intent=new Intent(MainActivity.this,ActivityGridView.class);
+
             startActivity(intent);
 
             return true;

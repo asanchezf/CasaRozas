@@ -40,7 +40,6 @@ public class ActivityGridView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_view);
 
-
          gridView=(GridView)findViewById(R.id.gridView);
         traerDatos();
 
