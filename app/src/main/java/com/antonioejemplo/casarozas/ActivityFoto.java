@@ -3,6 +3,7 @@ package com.antonioejemplo.casarozas;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 
 public class ActivityFoto extends AppCompatActivity {
 
+    private static final String DEBUG_TAG = "GESTOS";
     private ImageView fotogrande;
 
     //Para detectar el gesto del pellizco en el imageview
@@ -20,6 +22,7 @@ public class ActivityFoto extends AppCompatActivity {
     private float scale = 1f;
     private ScaleGestureDetector detectarPellizco;//Para gestos como el pellizco
     private GestureDetector detectorOtrosGestos;
+    private boolean dobleclick=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +89,79 @@ public class ActivityFoto extends AppCompatActivity {
             return true;
         }
 
-        @Override
+        @Override // Doble click
         public boolean onDoubleTap(MotionEvent e) {
-            // Tratar el evento
+
 
             Toast.makeText(ActivityFoto.this, "Doble click", Toast.LENGTH_SHORT).show();
+
+
+            if(!dobleclick) {
+                scale *= Math.max(2.0f, Math.min(scale, 5.0f));
+                matrix.setScale(scale, scale);
+                dobleclick=true;
+            }
+            else{
+                //scale *= Math.max(-2.0f, Math.min(scale, 5.0f));//No permitimos disminuir el tamaño original(1.0f)
+                matrix.setScale(1.0f, 1.0f);
+                dobleclick=false;
+            }
+            //matrix.setScale(scale, scale);
+            fotogrande.setImageMatrix(matrix);
+
+
             return true;
         }
 
+        @Override
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);
+            Toast.makeText(ActivityFoto.this, "Pulsación prolongada", Toast.LENGTH_SHORT).show();
+        }
 
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            //Toast.makeText(ActivityFoto.this, "Evento scroll", Toast.LENGTH_SHORT).show();
+            Log.v(DEBUG_TAG, "onScroll: " + e1.toString()+e2.toString());
+          /*  if (e1.getY() < e2.getY()){
+                Log.v("Gesture ", " Scroll Down");
+                matrix.setTranslate(2.0f, 1.0f);
+            }
+            if(e1.getY() > e2.getY()){
+                Log.v("Gesture ", " Scroll Up");
+                matrix.setTranslate(1.0f, 2.0f);
+            }*/
 
+            //Matrix matrixscroll = new Matrix();
+            //float p[] = new float[9];
+            //matrixscroll.getValues(p);
+            if(e1.getY() > e2.getY()){
+                Log.v("Gesture ", " Scroll Up");
+                //matrix.setScale(1.0f, 2.0f);//Amplia la imagen
+                //matrix.setSkew(1.0f, 2.0f);//REcorta la imagen//Crea una porción de la imagen
+                //matrix.postTranslate(-(fotogrande.getMaxWidth() - (2.0f / 2)) * scale, 0);
+                //matrix.postTranslate(0, -(fotogrande.getMaxHeight() - (2.0f / 2)) * scale);
+                //matrix.setTranslate(1.0f, 2.0f);
+                //matrix.mapPoints(p);
+
+            }
+            if (e1.getY() < e2.getY()){
+                Log.v("Gesture ", " Scroll Down");
+                //matrix.setTranslate(2.0f, 1.0f);
+                //matrix.setSkew(2.0f, 1.0f);
+            }
+
+            fotogrande.setImageMatrix(matrix);
+            //return super.onScroll(e1, e2, distanceX, distanceY);
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Toast.makeText(ActivityFoto.this, "Evento onFling", Toast.LENGTH_SHORT).show();
+            //return super.onFling(e1, e2, velocityX, velocityY);
+            return true;
+        }
     }
 
 }

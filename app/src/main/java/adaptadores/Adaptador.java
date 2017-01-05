@@ -211,12 +211,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.CasaRozasViewHolde
             cardView=(CardView)itemView.findViewById(R.id.cardview);
             btnVerImagen=(Button) itemView.findViewById(R.id.verImagen);
 
-          //  imagenllamada = (ImageView) itemView.findViewById(R.id.imgllamada);
 
             //Preparamos el listener y se lo asignamos a los controles que queramos...
-            //itemView.setOnClickListener(this);
-
             btnVerImagen.setOnClickListener(this);
+            imagenFoto.setOnClickListener(this);
         }
 
 

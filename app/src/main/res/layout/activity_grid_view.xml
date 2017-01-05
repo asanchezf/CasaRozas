@@ -7,7 +7,7 @@
     android:paddingBottom="2dp"
     android:paddingLeft="2dp"
     android:paddingRight="2dp"
-    android:paddingTop="4dp"
+    android:paddingTop="0dp"
     tools:context="com.antonioejemplo.casarozas.ActivityGridView">
 
 

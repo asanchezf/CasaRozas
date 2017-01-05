@@ -162,6 +162,13 @@ public class MainActivity extends AppCompatActivity {
                                         abrirActivityFoto(idPromocion);
 
                                     }
+                                    else if(v.getId()==R.id.foto) {
+
+                                        // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
+
+                                        abrirActivityFoto(idPromocion);
+
+                                    }
                                 }
                             }, getBaseContext());
 

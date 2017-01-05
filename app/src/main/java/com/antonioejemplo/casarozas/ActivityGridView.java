@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,16 +47,42 @@ public class ActivityGridView extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(ActivityGridView.this,ActivityFoto.class);
-                intent.putExtra("Id",position);
-                Toast.makeText(ActivityGridView.this, "Has seleccionado el elemento "+position, Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+                Toast.makeText(getBaseContext(),"positiocn ."+position+" "+"id "+id ,Toast.LENGTH_LONG).show();
+                abrirActivityFoto(position);
             }
         });
+    }
 
 
+    private void abrirActivityFoto(int idPromocion) {
+
+
+     /*   String imagen = null;
+
+        Iterator<CasaRozas> it = listdatos.iterator();
+
+        while (it.hasNext()) {
+
+            casaRozas = (CasaRozas) it.next();
+
+            //idPromocion contiene el id de bbdd del usuario. Lo comparamos con el id que tiene la coleccion para recoger
+            //todos los datos del registro seleccionado
+            if (casaRozas.getId() == (idPromocion)) {
+
+                imagen = casaRozas.getImagen();
+                 //Toast.makeText(this,"Datos recogidos.",Toast.LENGTH_LONG).show();
+                break;
+            }
+        }*/
+
+        Intent intent = new Intent(ActivityGridView.this, ActivityFoto.class);
+        intent.putExtra("Id", idPromocion);
+        intent.putExtra("Adapter", (Serializable) listdatos);
+
+        startActivity(intent);
 
     }
+
 
     private void traerDatos() {
 
