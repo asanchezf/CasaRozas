@@ -55,7 +55,7 @@ public class AdaptadorGridView extends BaseAdapter {
         imagenGridView.setLayoutParams(new GridView.LayoutParams(240,240));
         //Informamos la imagen con Glide:
         Glide.with(contexto)
-                .load("http://petty.hol.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
+                .load("http://petylde.esy.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
                 //.placeholder(R.drawable.image_susti)//Imagen de sustitución mientras carga la imagen final. Contiene transición fade.
                 .error(R.drawable.image_susti)//Imagen de sustitución si se ha producido error de carga
                 //.override(600,400)//Tamaño aplicado a la imagen. Tamaño en px. cuidado con los tamaños de las pantallas de los dispositivos.

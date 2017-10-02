@@ -3,4 +3,43 @@
     <string name="action_settings">Settings</string>
     <string name="grilla">Ver en GridView</string>
     <string name="salir">Pulsa otra vez para salir</string>
+    <string name="crear_nuevo_registro">Crear nuevo registro</string>
+    <string name="alta_nuevo_registro">ALTA NUEVO REGISTRO</string>
+    <string name="introduce_un_lugar">Introduce un lugar</string>
+    <string name="selecciona_un_mes">Selecciona un mes</string>
+    <string name="selecciona_un_a_o">Selecciona un año</string>
+    <string name="introduce_un_comentario">Introduce un comentario</string>
+    <string name="haz_click_para_seleccionar_una_imagen">Haz click para seleccionar una imagen</string>
+    <string name="guardar_imagen">GUARDAR IMAGEN</string>
+
+    <string-array name="meses">
+
+        <item> "Enero" </item>
+        <item> "Febrero" </item>
+        <item> "Marzo" </item>
+        <item> "Abril" </item>
+        <item> "Mayo" </item>
+        <item> "Junio" </item>
+        <item> "Julio" </item>
+        <item> "Agosto" </item>
+        <item> "Septiembre" </item>
+        <item> "Octubre" </item>
+        <item> "Noviembre" </item>
+        <item> "Diciembre" </item>
+    </string-array>
+
+    <string-array name="anios">
+
+        <item> "2011" </item>
+        <item> "2012" </item>
+        <item> "2013" </item>
+        <item> "2014" </item>
+        <item> "2015" </item>
+        <item> "2016" </item>
+        <item> "2017" </item>
+        <item> "2018" </item>
+        <item> "2019" </item>
+        <item> "2020" </item>
+    </string-array>
+
 </resources>

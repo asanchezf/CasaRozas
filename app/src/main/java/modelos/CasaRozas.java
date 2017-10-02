@@ -1,21 +1,30 @@
 package modelos;
 
+import java.io.Serializable;
+
 /**
  * Created by Susana on 14/11/2016.
  */
 
-public class CasaRozas {
+public class CasaRozas implements Serializable{
 
     private int id;
     private String lugar;
     private String anio;
     private String mes;
     private String imagen;
+    private String path;
     private String descripcion;
 
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-  /*  public CasaRozas(int id, String lugar, String anio, String mes, String imagen, String descripcion) {
+/*  public CasaRozas(int id, String lugar, String anio, String mes, String imagen, String descripcion) {
         this.id = id;
         this.lugar = lugar;
         this.anio = anio;

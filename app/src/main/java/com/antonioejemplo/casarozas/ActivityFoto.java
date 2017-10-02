@@ -1,5 +1,6 @@
 package com.antonioejemplo.casarozas;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
+import modelos.CasaRozas;
+import utilidades.Conexiones;
 
 public class ActivityFoto extends AppCompatActivity {
 
@@ -28,17 +32,33 @@ public class ActivityFoto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foto);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         fotogrande = (ImageView) findViewById(R.id.fotogrande);
 
         Bundle bundle = getIntent().getExtras();
         //Se recoge un entero y al Editext hay que pasarle un string en el método setText. Es necesario el String.valueof para que no dé error.
-        String idrecogido = String.valueOf(bundle.getInt("Id"));
-        String imagen = bundle.getString("Imagen");
+        //String idrecogido = String.valueOf(bundle.getInt("Id"));
+        //String imagen = bundle.getString("Imagen");
+        String traerFotografias=Conexiones.TRAER_IMAGENES_OON_GLIDE;
+
+        CasaRozas casaRozas=null;
+        //int idrecogido=0 ;
+        String imagen = null;
+        if(bundle!=null){
+            casaRozas= (CasaRozas) bundle.getSerializable("Objeto_CasaRozas");
+            int idrecogido = casaRozas.getId();
+            imagen = casaRozas.getImagen();
+
+
+        }
+
+
+
         //Descargamos la imagen con Glide:
         Glide.with(this)
-                .load("http://petty.hol.es/CasaRozas/" + imagen)//Desde dónde cargamos las imágenes
+                .load(traerFotografias + imagen)//Desde dónde cargamos las imágenes
+                //.load("http://petylde.esy.es/CasaRozas/" + imagen)//Desde dónde cargamos las imágenes
                 //.placeholder(R.drawable.image_susti)//Imagen de sustitución mientras carga la imagen final. Contiene transición fade.
                 .error(R.drawable.image_susti)//Imagen de sustitución si se ha producido error de carga
                 //.override(600,400)//Tamaño aplicado a la imagen. Tamaño en px. cuidado con los tamaños de las pantallas de los dispositivos.

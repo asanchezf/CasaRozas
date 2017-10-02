@@ -2,9 +2,37 @@
 <resources>
     <color name="colorPrimary">#9575cd</color>
     <color name="colorPrimaryDark">#5e35b1</color>
-    <color name="colorAccent">#81d4fa</color>
+    <color name="colorAccent">#3560B1</color>
 
     <color name="backgroundColor">#212121</color>
 
     <color name="background_footer">#90000000</color>
+
+    <!--Gama de grises-->
+    <color name="md_blue_grey_50">#eceff1</color>
+    <color name="md_blue_grey_100">#cfd8dc</color>
+    <color name="md_blue_grey_200">#b0bec5</color>
+    <color name="md_blue_grey_300">#90a4ae</color>
+    <color name="md_blue_grey_400">#78909c</color>
+    <color name="md_blue_grey_500">#607d8b</color>
+    <color name="md_blue_grey_600">#546e7a</color>
+    <color name="md_blue_grey_700">#455a64</color>
+    <color name="md_blue_grey_800">#37474f</color>
+    <color name="md_blue_grey_900">#263238</color>
+    <color name="md_blue_grey_500_25">#40607d8b</color>
+    <color name="md_blue_grey_500_50">#80607d8b</color>
+    <color name="md_blue_grey_500_75">#c0607d8b</color>
+
+    <color name="md_green_700">#388e3c</color>
+
+    <!--Gama de grises-->
+    <color name="md_white_1000">#ffffff</color>
+    <color name="md_white_1000_10">#1affffff</color>
+    <color name="md_white_1000_15">#22ffffff</color>
+    <color name="md_white_1000_20">#33ffffff</color>
+    <color name="md_white_1000_25">#40ffffff</color>
+    <color name="md_white_1000_50">#80ffffff</color>
+    <color name="md_white_1000_60">#99ffffff</color>
+    <color name="md_white_1000_75">#c0ffffff</color>
+
 </resources>

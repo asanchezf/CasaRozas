@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import modelos.CasaRozas;
+import utilidades.Conexiones;
 
 
 /**
@@ -117,9 +118,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.CasaRozasViewHolde
         holder.txtanio.setText(String.format("Año %s", items.get(position).getAnio()));
         holder.txtdescripcion.setText(items.get(position).getDescripcion());
 
-        //Informamos la imagen con Glide:
+        //Informamos la imagen con Glide: http://petylde.esy.es/WebServicesPHPCasaRozas
         Glide.with(contexto)
-                .load("http://petty.hol.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
+                //.load("http://petty.hol.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
+                //.load("http://petylde.esy.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenesn
+                .load(Conexiones.TRAER_IMAGENES_OON_GLIDE+items.get(position).getImagen())//Desde dónde cargamos las imágenes
+
                 //.placeholder(R.drawable.image_susti)//Imagen de sustitución mientras carga la imagen final. Contiene transición fade.
                 .error(R.drawable.image_susti)//Imagen de sustitución si se ha producido error de carga
                 //.override(600,400)//Tamaño aplicado a la imagen. Tamaño en px. cuidado con los tamaños de las pantallas de los dispositivos.

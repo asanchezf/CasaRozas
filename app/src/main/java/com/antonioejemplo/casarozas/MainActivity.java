@@ -3,6 +3,7 @@ package com.antonioejemplo.casarozas;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import adaptadores.Adaptador;
 import modelos.CasaRozas;
+import utilidades.Conexiones;
 import volley.AppController;
 import volley.MyJSonRequestImmediate;
 
@@ -37,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOGTAG = "OBTENER_DATOS";
     private RecyclerView lista;
-    private RecyclerView.LayoutManager lManager;
+    //private RecyclerView.LayoutManager lManager;
     private Context contexto;
     private RequestQueue requestQueue;
     private List<CasaRozas> listdatos;//Se le enviará al Adaptador
     private CasaRozas casaRozas;
-    private JsonObjectRequest myjsonObjectRequest;
+    //private JsonObjectRequest myjsonObjectRequest;
     private Adaptador adapter;
     //Variable que le pasamos a la llamada del adaptador. Necesita un listener
     private Adaptador.OnItemClickListener listener;
@@ -52,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        RecyclerView.LayoutManager lManager;
 
         //Definimos el RecyclerView..Pasar a un procedimiento.
         lista = (RecyclerView) findViewById(R.id.lista);
@@ -65,9 +68,16 @@ public class MainActivity extends AppCompatActivity {
 
         //requestQueue = Volley.newRequestQueue(this);
 
+
+        /*traerDatos();*/
+
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
         traerDatos();
-
-
     }
 
     private void traerDatos() {
@@ -83,13 +93,18 @@ public class MainActivity extends AppCompatActivity {
                         3-JsonObjectRequest: Obtiene una respuesta de tipo JSONObject a partir de un recurso con este formato.
                         4-JsonArrayRequest: Obtiene como respuesta un objeto del tipo JSONArray a partir de un formato JSON.*/
 
-
-
+         JsonObjectRequest myjsonObjectRequest;
         String tag_json_obj_actual = "json_obj_req_actual";
 
-        String patronUrl = "http://petty.hol.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
-        String uri = String.format(patronUrl);
+        //String patronUrl = "http://petty.hol.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        //NUEVO SERVIDOR:
+       /* String patronUrl = "http://petylde.esy.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        */
 
+
+        //SE CREA CLASE APARTE PARA GESTIONAR LAS CONEXIONES.
+        String patronUrl = Conexiones.OBTENER_DATOS_CASA;
+        String uri = String.format(patronUrl);
         listdatos = new ArrayList<CasaRozas>();
 
         Log.v(LOGTAG, "Ha llegado a immediateRequestTiempoActual. Uri: " + uri);
@@ -115,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                         String mes = "";
                         String imagen = "";
                         String descripcion = "";
-
 
 
                         try {
@@ -150,19 +164,18 @@ public class MainActivity extends AppCompatActivity {
                             }
 
 
-
-                            adapter=new Adaptador(listdatos, new Adaptador.OnItemClickListener() {
+                            adapter = new Adaptador(listdatos, new Adaptador.OnItemClickListener() {
                                 @Override
                                 public void onClick(RecyclerView.ViewHolder holder, int idPromocion, View v) {
 
-                                    if(v.getId()==R.id.verImagen) {
+                                    if (v.getId() == R.id.verImagen) {
 
-                                       // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
+                                        //idPromocion=listdatos.get(lista.getChildAdapterPosition(v)).getId();
 
                                         abrirActivityFoto(idPromocion);
 
-                                    }
-                                    else if(v.getId()==R.id.foto) {
+                                    } else if (v.getId() == R.id.foto) {
 
                                         // Toast.makeText(getBaseContext(), "Has hecho click en el botón", Toast.LENGTH_LONG).show();
 
@@ -209,33 +222,99 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-private void abrirActivityFoto(int idPromocion) {
+    private void abrirActivityFoto(int idPromocion) {
 
-    String imagen = null;
 
-    Iterator<CasaRozas> it = listdatos.iterator();
+//RECORRIENDO listdatos CON UN Iterator
+        String imagen = null;
+        /*int id=0;
+        int tamanio=listdatos.size();*/
+        int posicion = 0;//ES LA POSICIÓN QUE TIENE EN EL ARRAYlIST EL ELEMENTE QUE HEMOS SELECCIONADO
+        Iterator<CasaRozas> it = listdatos.iterator();
 
-    while (it.hasNext()) {
+        //1-UTILIZANDO UN FOR EN ORDEN ASCENDENTE:
+   /*     for (int i=0;i<listdatos.size();i++){
+            casaRozas = (CasaRozas) it.next();
+            if (casaRozas.getId() == (idPromocion)) {
 
-        casaRozas = (CasaRozas) it.next();
+                imagen = casaRozas.getImagen();
+                //id=tamanio-1;
+                //id=casaRozas.getId();
+                //posicion=listdatos.get(id).getId();
+                //posicion=listdatos.size()-1;
+                posicion=i;//ES LA POSICIÓN QUE TIENE EN EL ARRAYlIST EL ELEMENTE QUE HEMOS SELECCIONADO
+                //posicion=58;
 
-        //idPromocion contiene el id de bbdd del usuario. Lo comparamos con el id que tiene la coleccion para recoger
-        //todos los datos del registro seleccionado
-        if (casaRozas.getId() == (idPromocion)) {
 
-            imagen = casaRozas.getImagen();
-            // Toast.makeText(getActivity(),"Datos recogidos.",Toast.LENGTH_LONG).show();
-            break;
+                // Toast.makeText(getActivity(),"Datos recogidos.",Toast.LENGTH_LONG).show();
+
+            }
+
+        }*/
+
+
+
+
+/*
+        //2-UTILIZANDO UN FOR EN ORDEN DESCENDENTE:
+        for (int i=listdatos.size();i>0;i--){
+            casaRozas = (CasaRozas) it.next();
+            if (casaRozas.getId() == (idPromocion)) {
+
+                imagen = casaRozas.getImagen();
+                //id=tamanio-1;
+                //id=casaRozas.getId();
+                //posicion=listdatos.get(id).getId();
+                //posicion=listdatos.get(listdatos.size()-i).getId();
+                posicion=listdatos.size()-i;//ES LA POSICIÓN QUE TIENE EN EL ARRAYlIST EL ELEMENTE QUE HEMOS SELECCIONADO
+                //posicion=58;
+
+
+                // Toast.makeText(getActivity(),"Datos recogidos.",Toast.LENGTH_LONG).show();
+
+            }
+        }*/
+
+        //RECORRIENDO UN WHILE Y CONTROLANDO LA VARIABLE POSICION
+        while (it.hasNext()) {
+            casaRozas = (CasaRozas) it.next();
+
+            //idPromocion contiene el id de bbdd del usuario. Lo comparamos con el id que tiene la coleccion para recoger
+            //todos los datos del registro seleccionado
+            if (casaRozas.getId() == (idPromocion)) {
+
+                imagen = casaRozas.getImagen();
+                //id=tamanio-1;
+                //id=casaRozas.getId();
+                 //posicion=listdatos.get(id).getId();
+                //posicion=listdatos.get(listdatos.size()-1).getId();
+                //posicion=listdatos.size()-1;
+                //posicion=58;
+
+
+                // Toast.makeText(getActivity(),"Datos recogidos.",Toast.LENGTH_LONG).show();
+
+                break;
+            }
+
+            posicion++;//ES LA POSICIÓN QUE TIENE EN EL ARRAYlIST EL ELEMENTE QUE HEMOS SELECCIONADO
         }
+
+        //PASAMOS LOS DATOS EN UN BUNDLE DENTRO DEL OBJETO CASAROZAS
+      /*  Intent intent = new Intent(MainActivity.this, ActivityFoto.class);
+        intent.putExtra("Id", idPromocion);
+        intent.putExtra("Imagen", imagen);*/
+
+ //FORMA 2- PASANDO POR PARÁMETRO EL MÓDELO CasaRozas. PREVIAMENTE DEBE IMPLEMENTAR SERIALIZABLE PARA PODER PASARLO EN UN BUNDLE
+        CasaRozas casaRozas = listdatos.get(posicion);//idPromocion es el objeto seleccionado pero hay que acceder a la posición de listdatos que empieza desde 0
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Objeto_CasaRozas",casaRozas);
+
+        Intent intent = new Intent(MainActivity.this, ActivityFoto.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
-
-    Intent intent = new Intent(MainActivity.this, ActivityFoto.class);
-    intent.putExtra("Id", idPromocion);
-    intent.putExtra("Imagen", imagen);
-
-    startActivity(intent);
-
-}
 
 
     @Override
@@ -251,6 +330,7 @@ private void abrirActivityFoto(int idPromocion) {
         back_pressed = System.currentTimeMillis();
         // super.onBackPressed();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -267,11 +347,17 @@ private void abrirActivityFoto(int idPromocion) {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.grilla) {
-            Intent intent=new Intent(MainActivity.this,ActivityGridView.class);
+            Intent intent = new Intent(MainActivity.this, ActivityGridView.class);
 
             startActivity(intent);
 
             return true;
+        } else if (id == R.id.registro) {
+
+            Intent intent = new Intent(MainActivity.this, ActivityRegistro.class);
+
+            startActivity(intent);
+
         }
 
         return super.onOptionsItemSelected(item);

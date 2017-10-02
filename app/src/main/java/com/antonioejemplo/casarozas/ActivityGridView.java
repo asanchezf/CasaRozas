@@ -2,8 +2,10 @@ package com.antonioejemplo.casarozas;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,45 +41,45 @@ public class ActivityGridView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_view);
-
-         gridView=(GridView)findViewById(R.id.gridView);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        inicializarControles();
         traerDatos();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),"positiocn ."+position+" "+"id "+id ,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),"positiocn ."+position+" "+"id "+id ,Toast.LENGTH_LONG).show();
                 abrirActivityFoto(position);
             }
         });
     }
 
+    private void inicializarControles() {
+        gridView=(GridView)findViewById(R.id.gridView);
+        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//Botón actividad padre
+    }
+
 
     private void abrirActivityFoto(int idPromocion) {
 
-
-     /*   String imagen = null;
-
-        Iterator<CasaRozas> it = listdatos.iterator();
-
-        while (it.hasNext()) {
-
-            casaRozas = (CasaRozas) it.next();
-
-            //idPromocion contiene el id de bbdd del usuario. Lo comparamos con el id que tiene la coleccion para recoger
-            //todos los datos del registro seleccionado
-            if (casaRozas.getId() == (idPromocion)) {
-
-                imagen = casaRozas.getImagen();
-                 //Toast.makeText(this,"Datos recogidos.",Toast.LENGTH_LONG).show();
-                break;
-            }
-        }*/
-
+        //SE RECOJEN SOLO LOS DATOS NECESARIOS EN EL INTENT NO EL OBJETO COMPLETO CasaRozas.NO ES NECESARIO CREAR UN BUNDLE PARA RECOGERLO PORQUE VIENEN EN EL INTENT FORMA 1
+     /*   CasaRozas listaCasaRozas=listdatos.get(idPromocion);
+        int id=listaCasaRozas.getId();
+        String img=listaCasaRozas.getImagen();
         Intent intent = new Intent(ActivityGridView.this, ActivityFoto.class);
         intent.putExtra("Id", idPromocion);
-        intent.putExtra("Adapter", (Serializable) listdatos);
+        intent.putExtra("Imagen",img);
+        startActivity(intent);*/
 
+        //SE RECOJE EL OBJETO CasaRozas. NECESARIO CREAR UN BUNDLE PARA RECOGER EL OBJETO COMPLETO FORMA 2
+        CasaRozas casaRozas = listdatos.get(idPromocion);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Objeto_CasaRozas",casaRozas);
+
+        Intent intent = new Intent(ActivityGridView.this, ActivityFoto.class);
+        intent.putExtras(bundle);
         startActivity(intent);
 
     }
@@ -101,7 +102,8 @@ public class ActivityGridView extends AppCompatActivity {
 
         String tag_json_obj_actual = "json_obj_req_actual";
 
-        String patronUrl = "http://petty.hol.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        //String patronUrl = "http://petty.hol.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        String patronUrl = "http://petylde.esy.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
         String uri = String.format(patronUrl);
 
         listdatos = new ArrayList<CasaRozas>();

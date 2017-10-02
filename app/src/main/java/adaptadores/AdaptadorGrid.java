@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import modelos.CasaRozas;
+import utilidades.Conexiones;
 
 /**
  * Created by Susana on 21/11/2016.
@@ -72,10 +73,11 @@ public class AdaptadorGrid extends BaseAdapter {
         //HAY PATRÓN VIEWHOLDER Y YA NO HACE FALTA VOLVER A CREAR LA REFERENCIA A LOS OBJETOS EN ESTE MOMENTO
         /*ImageView imagen=(ImageView)convertView.findViewById(R.id.imagengrid);
         TextView texto=(TextView)convertView.findViewById(R.id.textofoto);*/
-
+        String traerImagenes=Conexiones.TRAER_IMAGENES_OON_GLIDE;
         //Informamos la imagen con Glide:
         Glide.with(contexto)
-                .load("http://petty.hol.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
+                .load(traerImagenes+items.get(position).getImagen())
+                //.load("http://petylde.esy.es/CasaRozas/"+items.get(position).getImagen())//Desde dónde cargamos las imágenes
                 //.placeholder(R.drawable.image_susti)//Imagen de sustitución mientras carga la imagen final. Contiene transición fade.
                 .error(R.drawable.image_susti)//Imagen de sustitución si se ha producido error de carga
                 //.override(600,400)//Tamaño aplicado a la imagen. Tamaño en px. cuidado con los tamaños de las pantallas de los dispositivos.

@@ -2,9 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.antonioejemplo.casarozas.MainActivity">
+
     <item
-        android:id="@+id/grilla"
+        android:id="@+id/registro"
         android:orderInCategory="100"
-        android:title="@string/grilla"
+        android:title="@string/crear_nuevo_registro"
         app:showAsAction="never" />
+
+    <item
+    android:id="@+id/grilla"
+    android:orderInCategory="100"
+    android:title="@string/grilla"
+    app:showAsAction="never" />
+
+
 </menu>
