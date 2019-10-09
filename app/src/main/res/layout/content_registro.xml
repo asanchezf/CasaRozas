@@ -61,7 +61,7 @@ tools:context="com.antonioejemplo.casarozas.ActivityRegistro">
         android:textStyle="bold|italic"
 
         android:background="@color/md_blue_grey_50"
-        android:text="@string/selecciona_un_mes"
+        android:text="@string/selecciona_un_a_o"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
@@ -98,7 +98,7 @@ tools:context="com.antonioejemplo.casarozas.ActivityRegistro">
             android:textStyle="bold|italic"
 
             android:background="@color/md_blue_grey_50"
-            android:text="@string/selecciona_un_a_o"
+            android:text="@string/selecciona_un_mes"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:paddingLeft="10dp"

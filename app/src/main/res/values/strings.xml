@@ -11,6 +11,7 @@
     <string name="introduce_un_comentario">Introduce un comentario</string>
     <string name="haz_click_para_seleccionar_una_imagen">Haz click para seleccionar una imagen</string>
     <string name="guardar_imagen">GUARDAR IMAGEN</string>
+    <string name="no_hay_acceso_a_internet">NO HAY ACCESO A INTERNET</string>
 
     <string-array name="meses">
 

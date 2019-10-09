@@ -3,7 +3,7 @@
           package="com.antonioejemplo.casarozas">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    /*PARA PODER LEER EN LA GALERÍA,PARA PODER ESCRIBIR EN LA GALERÍA,PARA PODER ABRIR LA CÁMARA*/
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -14,7 +14,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -43,11 +44,10 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"
-                />
+                android:value=".MainActivity"/>
         </activity>
 
-        //PARA DAR SOPORTE A ANDROID 7 EN ACCESO A DIRECTORIOS
+        <!-- PARA DAR SOPORTE A ANDROID 7 EN ACCESO A DIRECTORIOS-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

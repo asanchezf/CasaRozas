@@ -103,7 +103,8 @@ public class ActivityGridView extends AppCompatActivity {
         String tag_json_obj_actual = "json_obj_req_actual";
 
         //String patronUrl = "http://petty.hol.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
-        String patronUrl = "http://petylde.esy.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        //String patronUrl = "http://petylde.esy.es/WebServicesPHPCasaRozas/obtener_datos_casa.php";
+        String patronUrl = "http://antonymail62.000webhostapp.com/WebServicesPHPCasaRozas/obtener_datos_casa.php";
         String uri = String.format(patronUrl);
 
         listdatos = new ArrayList<CasaRozas>();

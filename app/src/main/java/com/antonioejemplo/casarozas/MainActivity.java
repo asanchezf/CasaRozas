@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,10 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOGTAG = "OBTENER_DATOS";
     private RecyclerView lista;
+    private TextView txtNoInternet;
+    private ImageView imgNoInternet;
     //private RecyclerView.LayoutManager lManager;
     private Context contexto;
     private RequestQueue requestQueue;
     private List<CasaRozas> listdatos;//Se le enviará al Adaptador
+
     private CasaRozas casaRozas;
     //private JsonObjectRequest myjsonObjectRequest;
     private Adaptador adapter;
@@ -58,26 +65,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         RecyclerView.LayoutManager lManager;
-
         //Definimos el RecyclerView..Pasar a un procedimiento.
         lista = (RecyclerView) findViewById(R.id.lista);
         lManager = new LinearLayoutManager(contexto);
         //lista.setLayoutManager(lManager);
         lista.setLayoutManager(
                 new LinearLayoutManager(contexto, LinearLayoutManager.VERTICAL, false));
+        txtNoInternet= (TextView) findViewById(R.id.txtNoInternet);
+        imgNoInternet= (ImageView) findViewById(R.id.imgNoInternet);
 
-        //requestQueue = Volley.newRequestQueue(this);
-
-
-        /*traerDatos();*/
 
 
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        traerDatos();
+    protected void onResume() {
+        super.onResume();
+
+        ConnectivityManager manager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network=manager.getActiveNetworkInfo();
+        if(network!=null && network.isConnected()){
+            traerDatos();
+        }else{
+
+            imgNoInternet.setVisibility(View.VISIBLE);
+            txtNoInternet.setVisibility(View.VISIBLE);
+            lista.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void traerDatos() {
@@ -196,6 +211,9 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(LOGTAG, "Error Respuesta en JSON: ");
                             pDialog.dismiss();
                             Toast.makeText(getBaseContext(), "Se ha producido un error conectando con el servidor.", Toast.LENGTH_LONG).show();
+                            imgNoInternet.setVisibility(View.VISIBLE);
+                            txtNoInternet.setVisibility(View.VISIBLE);
+                            lista.setVisibility(View.INVISIBLE);
                         }
 
                         //priority = Request.Priority.IMMEDIATE;
@@ -210,7 +228,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(LOGTAG, "Error Respuesta en JSON: " + error.getMessage());
                         pDialog.dismiss();
                         Toast.makeText(getBaseContext(), "Se ha producido un error de respuesta accediendo al Servidor", Toast.LENGTH_SHORT).show();
-
+                        imgNoInternet.setVisibility(View.VISIBLE);
+                        txtNoInternet.setVisibility(View.VISIBLE);
+                        lista.setVisibility(View.INVISIBLE);
                     }
                 }
         );
